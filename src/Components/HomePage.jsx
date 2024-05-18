@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../hooks/UseAuth';
 
 const HomePage =() => {
 
@@ -8,6 +10,8 @@ const HomePage =() => {
     const [lon, setLon] = useState('');
     const [forecast, setForecast] = useState(null);
     const [showMore, setShowMore] = useState(false);
+    const navigate = useNavigate();
+    const {logout} = useAuth();
     const apiKey = process.env.REACT_APP_OPENWEATHER_API_KEY; 
     useEffect(() => {
         fetchWeatherData('6.927079', '79.861244');
@@ -38,6 +42,11 @@ const HomePage =() => {
         }
     };
 
+    const handleLogout = () => {
+      logout ();
+      navigate('/');
+    };
+
     const handleSearch = (e) => {
         e.preventDefault();
         try{
@@ -53,8 +62,13 @@ const HomePage =() => {
 
 
     return(
-        <div className=" w-full h-full text-slate-200 text-[0.8rem] pt-10 bg-slate-500">
-          <h1 className="text-3xl text-white font-serif justify-center text-center p-10 py-5 font-bold mb-1">Weather Information</h1>
+        <div className="w-full h-full text-slate-200 text-[0.8rem] pt-10 bg-slate-500">
+           <div className='fixed flex w-full top-0 z-10 p-2 justify-center items-center bg-slate-300'>
+              <h1 className="text-3xl text-purple-700 w-full font-serif justify-center text-center font-bold py2 px-2 ml-36 ">Weather Information</h1>
+              <button onClick={() => handleLogout()} className=" text-[1rem] py-2 px-5 shadow-2xl shadow-slate-600 bg-purple-800 text-white rounded content-end justify-end items-end">
+                Logout
+              </button>
+            </div>
           {weatherData && (
             <div className=' mt-0 mb-0 m-10 bg-slate-800 p-10 py-16'>
               <div className='grid grid-cols-1 md:grid-cols-2 gap-5 w-full h-full'>
@@ -74,7 +88,7 @@ const HomePage =() => {
                     <div className='flex flex-col h-1/2 justify-center items-center bg-slate-700  border-[0.1rem]  border-purple-100 rounded-[1rem]  shadow-sm shadow-purple-800 hover:bg-slate-600 transition duration-200 ease-linear hover:border-purple-900'>
                       <h1 className='text-[1rem] font-bold text-white'>UV</h1>
                       <img src='../icons8-uv-64.png' alt='' className=' w-14 h-14'/>
-                      <p>{(weatherData.current.uvi - 273.15).toFixed(2)}°C</p>
+                      <p>{(weatherData.current.uvi).toFixed(2)}</p>
                     </div>
                   </div>
                   
@@ -83,12 +97,12 @@ const HomePage =() => {
                   <div className='flex flex-col justify-center text-center items-center p-3   rounded-[1rem]  shadow-sm shadow-purple-800 hover:bg-slate-600 transition duration-200 ease-linear hover:shadow-white'>
                     <h1 className='text-[1rem] font-bold text-white'>Pressure</h1>
                     <img src='../icons8-pressure-48.png' alt='' className=' w-12 h-12'/>
-                    <p>{(weatherData.current.pressure - 273.15).toFixed(2)}hPa</p>
+                    <p>{(weatherData.current.pressure).toFixed(2)} hPa</p>
                   </div>
                   <div className='flex flex-col justify-center text-center items-center p-3  rounded-[0.5rem]  shadow-sm shadow-purple-800 hover:bg-slate-600 transition duration-200 ease-linear hover:shadow-white'>
                     <h1 className='text-[1rem] font-bold text-white'>Humidity</h1>
                     <img src='../icons8-humidity-48.png' alt='' className=' w-12 h-12'/>
-                    <p>{(weatherData.current.humidity - 273.15).toFixed(2)}%</p>
+                    <p>{(weatherData.current.humidity).toFixed(2)} %</p>
                   </div>
                   <div className='flex flex-col justify-center text-center items-center p-3  rounded-[0.5rem]  shadow-sm shadow-purple-800 hover:bg-slate-600 transition duration-200 ease-linear hover:shadow-white'>
                     <h1 className='text-[1rem] font-bold text-white'>Dew Point</h1>
@@ -98,17 +112,17 @@ const HomePage =() => {
                   <div className='flex flex-col justify-center text-center items-center p-3 rounded-[0.5rem]  shadow-sm shadow-purple-800 hover:bg-slate-600 transition duration-200 ease-linear hover:shadow-white'>
                     <h1 className='text-[1rem] font-bold text-white'>Visibility</h1>
                     <img src='../icons8-visible-100.png' alt='' className=' w-12 h-12'/>
-                    <p>{(weatherData.current.visibility - 273.15).toFixed(2)}°C</p>
+                    <p>{(weatherData.current.visibility).toFixed(2)} m</p>
                   </div>
                   <div className='flex flex-col justify-center text-center items-center p-3  rounded-[0.5rem]  shadow-sm shadow-purple-800 hover:bg-slate-600 transition duration-200 ease-linear hover:shadow-white'>
                     <h1 className='text-[1rem] font-bold text-white'>Clouds</h1>
                     <img src='../icons8-clouds-100.png' alt='' className=' w-12 h-12'/>
-                    <p>{(weatherData.current.clouds - 273.15).toFixed(2)}°C</p>
+                    <p>{(weatherData.current.clouds).toFixed(2)} %</p>
                     </div>
                   <div className='flex flex-col justify-center text-center items-center p-3   rounded-[0.5rem]  shadow-sm shadow-purple-800 hover:bg-slate-600 transition duration-200 ease-linear hover:shadow-white'>
                       <h1 className='text-[1rem] font-bold text-white'>Wind Speed</h1>
                       <img src='../icons8-wind-64.png' alt='' className=' w-12 h-12'/>
-                      <p>Speed {(weatherData.current.wind_speed- 273.15).toFixed(2) }m/s</p>
+                      <p>Speed {(weatherData.current.wind_speed).toFixed(2) } m/s</p>
                       {/* <p>Wind Deg {(weatherData.current.wind_deg- 273.15).toFixed(2) }deg</p> */}
                   </div>
                 </div>
@@ -168,16 +182,16 @@ const HomePage =() => {
                   <div className=' flex flex-col justify-center p-3 rounded-md shadow-lg items-center hover:bg-slate-600 transition duration-200 ease-linear hover:shadow-white'>
                     <h1 className='text-[1rem] font-bold text-white'>Rain</h1>
                     <img src='../icons8-rain-48.png' alt='' className=' w-12 h-12'/>
-                    <p>{day.rain}</p>
+                    <p>{day.rain}mm</p>
                   </div>
                 </div>                
               </div>
             ))}
             {showMore && forecast.slice(3,7).map((day, index) => (
-              <div key={index} className=' pt-2 p-2 bg-slate-600 rounded-[1rem] m-1'>
+              <div key={index} className=' pt-2 p-2 bg-slate-600  rounded-[1rem] m-1'>
               <p className='text-[1.3rem] p-1 text-white'>Date: {new Date(day.dt * 1000).toLocaleDateString()}</p>
               <div className='grid grid-cols-2 md:grid-cols-4 relative gap-1 p-1 w-full'>
-                <div className=' flex flex-col justify-center p-3 shadow-sm rounded-md bg-slate-700 items-center hover:bg-slate-900 transition duration-200 ease-linear hover:shadow-white'>
+                <div className=' flex flex-col justify-center p-3 shadow-sm rounded-md bg-slate-800 items-center hover:bg-slate-900 transition duration-200 ease-linear hover:shadow-white'>
                   <img src={`http://openweathermap.org/img/wn/${day.weather[0].icon}.png`} alt='' className=' rounded-[50%]  bg-slate-400 w-25 h-25'/>
                   <p className='text-[1.1rem] font-bold text-white'>{day.weather[0].description}</p>
                   <p className='text-[0.9rem]'>{day.summary}</p>
@@ -204,7 +218,7 @@ const HomePage =() => {
                 <div className=' flex flex-col justify-center p-3 rounded-md shadow-lg items-center hover:bg-slate-600 transition duration-200 ease-linear hover:shadow-white'>
                   <h1 className='text-[1rem] font-bold text-white'>Rain</h1>
                   <img src='../icons8-rain-48.png' alt='' className=' w-12 h-12'/>
-                  <p>{day.rain}</p>
+                  <p>{day.rain} mm</p>
                 </div>
               </div>                
             </div>

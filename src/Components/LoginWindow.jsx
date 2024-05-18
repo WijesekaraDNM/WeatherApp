@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { message } from "antd";
 import { useNavigate } from "react-router-dom"; 
+import { useAuth } from "../hooks/UseAuth";
 
-const Login = () => {
+const LoginWindow = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const {login} = useAuth();
 
 
   const handleLogin =  (e) => {
@@ -16,7 +18,9 @@ const Login = () => {
       }
       else if(username==="Arthur" && password==="Mkar"){
         message.success("Login success!");
+        login();
         navigate('/home');
+
       }
       else if(username!=="Arthur" || password!=="Mkar"){
         message.error("Username or Password incorrect!")
@@ -64,22 +68,19 @@ const Login = () => {
             >
               Password
             </label>
-            {/* <p className="text-xs cursor-pointer hover:underline mt-2 mb-5">
-              Forget password
-            </p> */}
           </div>
 
           <button
             onClick={handleLogin}
             type="button"
-            className="my-4 block w-full rounded bg-purple-800 px-6 pb-2 pt-2.5 text-lg font-medium  leading-normal text-white shadow-[0_4px_30px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-purple-600 hover:shadow-[0_20px_20px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-yellow-700 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+            className="my-4 block w-full rounded bg-purple-800 px-6 pb-2 pt-2.5 text-lg font-medium  leading-normal text-white shadow-[0_4px_30px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-purple-600 hover:shadow-[0_20px_20px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-purple-900 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
           >
             Log In
           </button>
 
           <h4 className="text-center my-4 font-semibold">Or</h4>
 
-          <button className="px-4 py-2 my-5 border flex items-center justify-center gap-2 border-slate-200  w-full rounded-lg text-slate-700  hover:border-slate-400  hover:text-slate-900  hover:shadow transition duration-150">
+          <button className="px-4 py-2 my-5 border flex items-center justify-center gap-2 border-slate-200  w-full rounded-lg text-slate-700  hover:border-slate-400  hover:text-slate-900  hover:shadow-lg transition duration-150">
             <img className="w-6 h-6" src="../google.256x256.png" alt="google logo" />
             <span>Login with Google</span>
           </button>
@@ -90,4 +91,4 @@ const Login = () => {
 
 };
 
-export default Login;
+export default LoginWindow;
