@@ -64,29 +64,29 @@ const HomePage =() => {
     return(
         <div className="w-full h-full text-slate-200 text-[0.8rem] pt-10 bg-slate-500">
            <div className='fixed flex w-full top-0 z-10 p-2 justify-center items-center bg-slate-300'>
-              <h1 className="text-3xl text-purple-700 w-full font-serif justify-center text-center font-bold py2 px-2 ml-36 ">Weather Information</h1>
-              <button onClick={() => handleLogout()} className=" text-[1rem] py-2 px-5 shadow-2xl shadow-slate-600 bg-purple-800 text-white rounded content-end justify-end items-end">
+              <h1 className="text-2xl md:text-3xl text-purple-700 w-full font-serif justify-center text-center font-bold py-2 px-2 md:ml-36 ml-0 ">Weather Information</h1>
+              <button onClick={() => handleLogout()} className=" text-[0.7rem] md:text-[1rem] py-2 px-5 shadow-2xl shadow-slate-600 bg-purple-800 text-white rounded content-end justify-end items-end">
                 Logout
               </button>
             </div>
           {weatherData && (
-            <div className=' mt-0 mb-0 m-10 bg-slate-800 p-10 py-16'>
+            <div className=' mt-10 mb-0 m-5 bg-slate-800 p-10 py-16'>
               <div className='grid grid-cols-1 md:grid-cols-2 gap-5 w-full h-full'>
                 <div className='flex w-full relative rounded-[1rem] items-center content-center bg-slate-500 border-[0.2rem] border-purple-800 shadow-xl shadow-purple-800 justify-center'>
                   <div className='flex w-2/3 flex-col p-5 m-5 rounded-[3rem] justify-center border-[0.5rem] bg-slate-700 border-purple-100 shadow-2xl shadow-purple-100 items-center content-center hover:bg-slate-600 transition duration-200 ease-linear hover:border-purple-900'>
                     <img src={`http://openweathermap.org/img/wn/${weatherData.current.weather[0].icon}.png`} alt='' className=' rounded-[50%]  bg-slate-400 justify-center w-32 h-32'/>
-                    <h2 className="text-3xl font-bold text-white justify-center">{weatherData.timezone}</h2>
-                    <p className=' justify-center text-2xl'> {weatherData.current.weather[0].description}</p>
+                    <h2 className="md:text-3xl text-lg font-bold text-white justify-center">{weatherData.timezone}</h2>
+                    <p className=' justify-center text-md md:text-2xl'> {weatherData.current.weather[0].description}</p>
                   </div>
                   <div className='flex flex-col w-1/3 h-full gap-3 p-2'>
                     <div className='flex flex-col h-1/2 justify-center items-center p-3 bg-slate-700 border-purple-100 border-[0.1rem] rounded-[1rem]  shadow-sm shadow-purple-800 hover:bg-slate-600 transition duration-200 ease-linear hover:border-purple-900'>
-                      <h1 className='text-[1rem] font-bold text-white'>Temperature</h1>
+                      <h1 className='text-[1rem] md:visible invisible font-bold text-white'>Temperature</h1>
                       <img src='../icons8-temperature-48.png' alt='' className=' w-14 h-14'/>
                       <p> {(weatherData.current.temp - 273.15).toFixed(2)}°C</p>
                       <p>Feels like {(weatherData.current.feels_like - 273.15).toFixed(2)}°C</p>
                     </div>
                     <div className='flex flex-col h-1/2 justify-center items-center bg-slate-700  border-[0.1rem]  border-purple-100 rounded-[1rem]  shadow-sm shadow-purple-800 hover:bg-slate-600 transition duration-200 ease-linear hover:border-purple-900'>
-                      <h1 className='text-[1rem] font-bold text-white'>UV</h1>
+                      <h1 className='text-[1rem] md:visible invisible font-bold text-white'>UV</h1>
                       <img src='../icons8-uv-64.png' alt='' className=' w-14 h-14'/>
                       <p>{(weatherData.current.uvi).toFixed(2)}</p>
                     </div>
@@ -129,28 +129,28 @@ const HomePage =() => {
               </div>          
             </div>
           )}
-        <div className=" flex fixed w-full items-center bottom-0 justify-center bg-slate-200 py-5 my-0 z-10">
+        <div className=" flex fixed w-full  flex-wrap items-center bottom-0 justify-center bg-slate-200 py-5 my-0 z-10">
           <input
             type="text"
             placeholder="Latitude"
             value={lat}
             onChange={(e) => setLat(e.target.value)}
-            className="p-2 bg-slate-100 placeholder-slate-700 text-[black] border-[0.2rem] border-purple-800 rounded-[0.5rem] mr-2"
+            className="p-2 bg-slate-100 w-28 h-8 md:w-40 md:h-10 placeholder-slate-700 text-[black] border-[0.2rem] border-purple-800 rounded-[0.5rem] mr-2"
           />
           <input
             type="text"
             placeholder="Longitude"
             value={lon}
             onChange={(e) => setLon(e.target.value)}
-            className="p-2 bg-slate-100 border-[0.2rem] placeholder-slate-700 text-[black] border-purple-800  rounded-[0.5rem] mr-2"
+            className="p-2 bg-slate-100 w-28 h-8 md:w-40 md:h-10 border-[0.2rem] placeholder-slate-700 text-[black] border-purple-800  rounded-[0.5rem] mr-2"
           />
-          <button onClick={handleSearch} className="p-2 w-20 text-[1rem]  bg-purple-800 shadow-sm text-white rounded">
+          <button onClick={handleSearch} className="md:p-2 p-1 w-12 text-[0.7rem] md:text-[1rem] h-8 md:w-20 md:h-10 bg-purple-800 shadow-sm text-white rounded">
             Search
           </button>
         </div>
         {forecast && (
           <div className="flex flex-col m-10 ">
-            <h3 className="text-[2rem] text-[white] m-10 mt-20 font-bold">Weekly Forecast</h3>
+            <h3 className="text-[2rem] text-[white] m-10 mt-14 font-bold">Weekly Forecast</h3>
             {forecast.slice(0 ,3).map((day, index) => (
               <div key={index} className=' pt-2 p-2 bg-slate-600 rounded-[1rem] m-1'>
                 <p className='text-[1.3rem] p-1 text-white'>Date: {new Date(day.dt * 1000).toLocaleDateString()}</p>
